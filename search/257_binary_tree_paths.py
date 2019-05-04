@@ -1,5 +1,7 @@
 from typing import *
 
+import common
+
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -35,7 +37,16 @@ class Solution:
 
 
 def binary_tree_paths(root: TreeNode) -> List[str]:
-    pass
+
+    def search_path(paths: List[List[int]], current_path: List[int], node: TreeNode, visited: List[TreeNode]) -> None:
+        if node is None:
+            paths.append(current_path)
+        paths.append(node.val)
+        search_path(paths, node.left)
+        search_path(paths, node.right)
+
+    search_path([], root)
+
 
 
 if __name__ == '__main__':

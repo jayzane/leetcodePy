@@ -34,5 +34,32 @@ def random_nums(length: int = 100, sorted_flag: int = 0,
     return result
 
 
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+def init_tree(data_list: List[Union[int, str, None]], index) -> Optional[TreeNode]:
+    """
+    data_list首位为根节点(树)，奇数位为左节点(树), 奇数位为右节点(树)
+    :param data_list:
+    :param index:
+    :return:
+    """
+    len_data: int = len(data_list)
+    if len_data == 0 or index >= len_data:
+        return
+    if data_list[index] is None:
+        return
+    root: TreeNode = TreeNode(data_list[index])
+    root.left = init_tree(data_list, index * 2 + 1)
+    root.right = init_tree(data_list, index * 2 + 2)
+    return root
+
+
 if __name__ == '__main__':
-    print(random_nums(10, max_num=100))
+    # print(random_nums(10, max_num=100))
+    root1 = init_tree([1, 2, 3, 4, None, 8], 0)
+    print(root1.val)
