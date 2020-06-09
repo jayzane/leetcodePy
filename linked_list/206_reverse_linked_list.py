@@ -24,7 +24,7 @@ class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         new_head = None
         # 时间复杂度O(n^2)
-        # 空间复杂度O(1)
+        # 空间复杂度O(n)
         while head:
             node = ListNode(head.val)
             new_head = self.insert(new_head, node)
@@ -51,6 +51,7 @@ class SolutionA:
     def reverseList(self, head: ListNode) -> ListNode:
         pre = None
         # 时间复杂度：O(n)
+        # 空间复杂度：O(1)
         while head:
             next_tmp = head.next
             head.next = pre
@@ -64,6 +65,7 @@ class SolutionB:
 
     def reverseList(self, head: ListNode) -> ListNode:
         # 时间复杂度：O(n)
+        # 空间复杂度：O(1)
         p, prev = head, None
         while p:
             p.next, prev, p = prev, p, p.next
@@ -79,7 +81,7 @@ class SolutionC:
         # 递归总有一个结束条件
         if head is None or head.next is None:
             return head
-        p = self.reverseList(head.next)
+        p = self.reverseList(head.next)  # 栈调用链条
         head.next.next = head
         head.next = None
         return p

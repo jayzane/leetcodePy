@@ -59,6 +59,36 @@ def init_tree(data_list: List[Union[int, str, None]], index) -> Optional[TreeNod
     return root
 
 
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def init_list_node(data_list: List):
+    """
+    初始化单向链表
+    """
+    if not data_list:
+        return
+    head = ListNode(data_list[0])
+    p = head
+    for data in data_list[1:]:
+        p.next = ListNode(data)
+        p = p.next
+    return head
+
+
+def print_list_node(head: ListNode):
+    p = head
+    l = []
+    while p:
+        l.append(str(p.val))
+        p = p.next
+    s = '->'.join(l)
+    print(s)
+
+
 if __name__ == '__main__':
     # print(random_nums(10, max_num=100))
     root1 = init_tree([1, 2, 3, 4, None, 8], 0)
