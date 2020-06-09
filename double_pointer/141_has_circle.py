@@ -46,6 +46,7 @@ def has_cycle_back(head: ListNode) -> bool:
     >>> has_cycle_back(node21)
     False
     """
+    # 一切算法转暴力枚举
     index1 = 0
     node = head
     while node:
@@ -72,6 +73,14 @@ def has_cycle(head: ListNode) -> bool:
     >>> has_cycle(node21)
     False
     """
+    # 使用try-except也太geek了点儿
+    # 可以这样写
+    # low, fast = head, head
+    # while fast and fast.next:
+    #     low, fast = low.next, fast.next.next
+    #     if low == fast:
+    #         return True
+    # return False
     try:
         slow = head.next
         fast = head.next.next
@@ -81,6 +90,31 @@ def has_cycle(head: ListNode) -> bool:
         return True
     except AttributeError:
         return False
+
+
+def has_cycle_hash(head: ListNode) -> bool:
+    """
+    使用哈希表
+    时间复杂：O(n)
+    空间复杂: O(n)
+    :param head: ListNode
+    :return: bool
+    >>> has_cycle(node4)
+    True
+    >>> has_cycle(node11)
+    True
+    >>> has_cycle(node21)
+    False
+    """
+    if head is None or head.next is None:
+        return False
+    hash_map = set()
+    p = head
+    while p:
+        if p in hash_map:
+            return True
+        hash_map.add(p)
+        p = p.next
 
 
 if __name__ == '__main__':
