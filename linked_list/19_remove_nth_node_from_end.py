@@ -7,7 +7,7 @@
 
 当删除了倒数第二个节点后，链表变为 1->2->3->5.
 """
-from common.init_data import ListNode, init_list_node, print_list_node
+from common.init_data import ListNode, init_list_node, print_list_node, algorithm_func_multi_exec, linked_examples
 
 
 class Solution:
@@ -135,20 +135,6 @@ class SolutionC:
 
 
 if __name__ == '__main__':
-    l1 = init_list_node([])
-    l2 = init_list_node([1])
-    l3 = init_list_node([1, 2])
-    l4 = init_list_node([1, 2, 3, 4, 5])
     sol = SolutionC()
-    # 链表为空
-    nl1 = sol.removeNthFromEnd(l1, 1)
-    print_list_node(nl1)
-    # 链表长度为1
-    nl2 = sol.removeNthFromEnd(l2, 1)
-    print_list_node(nl2)
-    # 链表长度为2
-    nl3 = sol.removeNthFromEnd(l3, 2)
-    print_list_node(nl3)
-    # 链表长度大于2
-    nl4 = sol.removeNthFromEnd(l4, 2)
-    print_list_node(nl4)
+    args_list = [(1, ), (1, ), (2, ), (2, )]
+    algorithm_func_multi_exec(linked_examples, sol.removeNthFromEnd, args_list)

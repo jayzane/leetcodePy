@@ -89,6 +89,52 @@ def print_list_node(head: ListNode):
     print(s or None)
 
 
+def init_list_examples() -> List:
+    """产生链表常见的四种例子：空、1个结点、2个结点、大于2个结点"""
+    examples = []
+    l1 = init_list_node([])
+    l2 = init_list_node([1])
+    l3 = init_list_node([1, 2])
+    l4 = init_list_node([1, 2, 3, 4, 5])
+    examples.append(l1)
+    examples.append(l2)
+    examples.append(l3)
+    examples.append(l4)
+    return examples
+
+
+linked_examples = init_list_examples()
+
+
+def algorithm_func_exec(list_heads: List, func, args=()):
+    """
+    遍历list_heads并执行func(list_head)，然后输出打印
+    """
+    for list_head in list_heads:
+        if args:
+            head = func(list_head, args)
+        else:
+            head = func(list_head)
+        print_list_node(list_head)
+        print('>' * 5)
+        print_list_node(head)
+
+
+def algorithm_func_multi_exec(list_heads: List, func, args_list=()):
+    """
+    遍历list_heads并执行func(list_head)，然后输出打印
+    """
+    for i, list_head in enumerate(list_heads):
+        print_list_node(list_head)
+        if args_list:
+            head = func(list_head, *args_list[i])
+        else:
+            head = func(list_head)
+        print('>' * 5)
+        print_list_node(head)
+        print('-' * 20)
+
+
 if __name__ == '__main__':
     # print(random_nums(10, max_num=100))
     root1 = init_tree([1, 2, 3, 4, None, 8], 0)
