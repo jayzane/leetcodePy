@@ -86,7 +86,7 @@ def print_list_node(head: ListNode):
         l.append(str(p.val))
         p = p.next
     s = '->'.join(l)
-    print(s)
+    print(s or None)
 
 
 if __name__ == '__main__':
