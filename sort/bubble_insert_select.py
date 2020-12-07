@@ -1,6 +1,7 @@
 """
 冒泡、插入、选择排序
 2020-12-05: 20.03.59;11:04.33;06:18.13;12:15.51;03:52.58;03:07.01;
+2020-12-06: 03:24.21;03:02.81;02:28.71;
 """
 from sort import validatetool
 
@@ -22,16 +23,13 @@ def sort2(data):
     l = len(data)
     if l < 1:
         return data
-    for i in range(1, l):
+    for i in range(l):
         val = data[i]
-        for j in range(i - 1, -1, -1):
-            if val < data[j]:
-                data[j + 1] = data[j]
-            else:
-                data[j + 1] = val
-                break
-        else:
-            data[0] = val
+        j = i - 1
+        while j >= 0 and val < data[j]:
+            data[j + 1] = data[j]
+            j -= 1
+        data[j + 1] = val
     return data
 
 
@@ -41,7 +39,7 @@ def sort3(data):
     for i in range(l):
         for j in range(l - i - 1):
             if data[j] > data[j + 1]:
-                data[j], data[j + 1] = data[j + 1], data[j]
+                data[j + 1], data[j] = data[j], data[j + 1]
     return data
 
 

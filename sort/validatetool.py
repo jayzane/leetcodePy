@@ -8,5 +8,6 @@ DESTINATION = [
 
 def validate(func):
     for n, data in enumerate(SOURCE):
-        assert func(data) == DESTINATION[n], 'Validate Error'
+        data_copy = data[:]
+        assert func(data_copy) == DESTINATION[n], 'Validate Error'
     print('success!')
