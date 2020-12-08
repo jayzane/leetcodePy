@@ -8,15 +8,13 @@ from sort import validatetool
 
 def sort(data):
     l = len(data)
-    if l < 1:
-        return data
     for i in range(l):
         val = data[i]
-        j = i -1
+        j = i - 1
         while j >= 0 and val < data[j]:
-            data[j + 1] =data[j]
-            j -=1
-        data[j + 1] =val
+            data[j + 1] = data[j]
+            j -= 1
+        data[j + 1] = val
     return data
 
 
