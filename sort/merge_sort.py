@@ -1,8 +1,12 @@
 """
 归并排序
 2020-12-06: 22:04.35;07:54.77;02:46.99;01:50.48;
+2020-12-10: 05:11.03;01:31.73;02:45.53;01:59.04;
 """
 from sort import validatetool
+
+
+# TODO:归并的时候借用两次二分，right[0]在left中的位置，left[-1]在right中的位置
 
 
 def sort(data):
@@ -15,23 +19,17 @@ def sort(data):
         right = ms(d[m:])
         return merge(left, right)
 
-    def merge(l, r):
-        i = 0
-        j = 0
-        res = []
-        while i < len(l) and j < len(r):
-            if l[i] < r[j]:
-                res.append(l[i])
-                i += 1
-            else:
-                res.append(r[j])
-                j += 1
-        res += l[i:]
-        res += r[j:]
-        return res
+    def merge(left, right):
+        if not left:
+            return right
+        if not right:
+            return left
+        if left[0] < right[0]:
+            return [left[0]] + merge(left[1:], right)
+        return [right[0]] + merge(left, right[1:])
 
-    return ms(data)
-
+    res = ms(data)
+    return res
 
 
 if __name__ == '__main__':
