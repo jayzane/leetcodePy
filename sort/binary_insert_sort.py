@@ -17,12 +17,11 @@ def sort(data):
                 high = m - 1
             else:
                 low = m + 1
-        for j in range(i - 1, low - 1, -1):
+        for j in range(i - 1, high, -1):
             data[j + 1] = data[j]
-        data[low] = val
+        data[high + 1] = val
     return data
 
 
 if __name__ == '__main__':
-    sort([1, 2])
-    # validatetool.validate(sort)
+    validatetool.validate(sort)
