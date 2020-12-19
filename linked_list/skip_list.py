@@ -8,6 +8,7 @@ Redis的有序集合会用到
 查找、删除、插入都是O(log(n))
 但是跳表 按照区间查找数据（比如查找值在[100, 356]之间的数据）比红黑树效率高
 2020-12-18: 36.09.60;19.04.14;07:46.69;
+2020-12-19: 06:51.10;
 """
 import random
 
@@ -47,7 +48,7 @@ class SkipList:
             high = self._high = self._high + 1
         else:
             high = self.random_high()
-            if high > self._high and self._high < self._max_high:
+            if self._high < high and self._high < self._max_high:
                 high = self._high = self._high + 1
         curr = self._head
         new_node = SkipListNode(val, high)
