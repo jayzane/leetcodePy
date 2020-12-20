@@ -2,7 +2,7 @@
 链表法哈希表
 2020-12-19: 51:19.01;17:12.86;
 """
-
+from hash_table.tools import get_hash
 
 class HTListNode:
     def __init__(self, key=None, val=None, next_n=None):
@@ -24,7 +24,7 @@ class HashTable:
         self.use = 0
 
     def _hash(self, key):
-        return 0 if key is None else (abs(hash(key)) >> 16) % (len(self.array) - 1)
+        return get_hash(key, len(self.array))
 
     def _resize(self):
         old_array = self.array
@@ -35,15 +35,14 @@ class HashTable:
             old_curr = old_array[i]
             if old_curr is None or old_curr.next is None:
                 continue
-            old_curr = old_curr.next
-            hash_code = self._hash(old_curr.key)
-            if self.array[hash_code] is None:
-                self.array[hash_code] = HTListNode()
-                self.use += 1
-            new_curr = self.array[hash_code]
-            while new_curr.next:
-                new_curr = new_curr.next
-            new_curr.next = HTListNode(old_curr.key, old_curr.val, old_curr.next)
+            while old_curr.next:
+                old_curr = old_curr.next
+                hash_code = self._hash(old_curr.key)
+                if self.array[hash_code] is None:
+                    self.array[hash_code] = HTListNode()
+                    self.use += 1
+                new_curr = self.array[hash_code]
+                new_curr.next = HTListNode(old_curr.key, old_curr.val, new_curr.next)
 
     def put(self, key, val):
         hash_code = self._hash(key)

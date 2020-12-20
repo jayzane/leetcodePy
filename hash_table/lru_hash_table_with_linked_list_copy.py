@@ -1,9 +1,8 @@
 """
 使用哈希表、双向链表实现LRU（Least Recently Used）
 2020-12-19: 27:15.42;
-2020-12-20: 15:31.53;
 """
-from hash_table.hash_table_with_linked_list_copy import HashTable
+from hash_table import HashTable
 
 
 class DNode:
@@ -20,61 +19,61 @@ class DNode:
 class LRUHashTable:
 
     def __init__(self, capacity=4):
+        self._length = 0
         self._capacity = capacity
-        self._hash_table = HashTable()
         self._head = DNode()
         self._tail = DNode()
         self._head.next = self._tail
         self._tail.prev = self._head
-        self._use = 0
+        self._hash_table = HashTable()
 
-    def _delete(self, node):
-        node.prev.next = node.next
-        node.next.prev = node.prev
-
-    def _add(self, node):
+    def _add_node(self, node):
         node.next = self._head.next
         node.prev = self._head
-
         self._head.next.prev = node
         self._head.next = node
 
+    def _delete_node(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def delete(self, key):
+        node = self._hash_table.get(key)
+        if node is None:
+            return
+        self._hash_table.delete(key)
+        self._delete_node(node)
+        self._length -= 1
+
     def _move_head(self, node):
-        self._delete(node)
-        self._add(node)
+        self._delete_node(node)
+        self._add_node(node)
 
     def _pop_tail(self):
         node = self._tail.prev
-        node.prev.next = self._tail
-        node.next.prev = node.prev
+        self._delete_node(node)
         return node
 
     def add(self, key, val):
-        node = self._hash_table.get(key)
-        if node:
-            node.val = val
-            self._move_head(node)
-        else:
-            node = DNode(key, val)
-            self._use += 1
-            if self._use > self._capacity:
-                self._pop_tail()
-                self._use -= 1
-            self._add(node)
+        old_node = self._hash_table.get(key)
+        if old_node is not None:
+            old_node.val = val
+            self._move_head(old_node)
+            return
+        node = DNode(key, val)
+        if self._length + 1 > self._capacity:
+            self._pop_tail()
+            self._length -= 1
+        self._length += 1
+        self._add_node(node)
         self._hash_table.put(key, node)
 
     def get(self, key):
         node = self._hash_table.get(key)
-        if node:
-            self._move_head(node)
-            return node
-
-    def delete(self, key):
-        node = self._hash_table.get(key)
-        if node:
-            self._delete(node)
-            self._hash_table.delete(key)
-            self._use -= 1
+        if node is None:
+            return
+        self._move_head(node)
+        return node.val
 
     def __repr__(self):
         vals = []
