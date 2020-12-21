@@ -13,7 +13,7 @@ def sort(data):
 
     def insert(n, v):
         if n:
-            if n.v < v:
+            if v > n.v:
                 if n.r:
                     insert(n.r, v)
                 else:
@@ -29,7 +29,6 @@ def sort(data):
             ino(n.l, res)
             res.append(n.v)
             ino(n.r, res)
-
     l = len(data)
     if l <= 1:
         return data
